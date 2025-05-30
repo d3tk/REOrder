@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+
+  <!-- Page summary for search engines -->
+  <meta name="description" content="REOrdering Patches Improves Vision Models">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="REOrdering Patches Improves Vision Models" />
+  <meta property="og:description"
+    content="REOrder leverages a Plackett-Luce policy with reinforcement learning to optimize image patch sequence order." />
+  <meta property="og:url" content="https://d3tk.github.io/REOrder/" />
+  <meta property="og:image" content="https://d3tk.github.io/REOrder/static/images/shuffled.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="REOrdering Patches Improves Vision Models">
+  <meta name="twitter:description"
+    content="Why linearize patches in row-major order when REOrder improves long sequence vision transformer performance by learning task-optimal patch sequence orders via reinforcement learning.">
+  <meta name="twitter:image" content="https://d3tk.github.io/REOrder/static/images/shuffled.png">
+
+  <!-- Indexing keywords -->
+  <meta name="keywords"
+    content="vision, transformer, patch ordering, reinforcement learning, information theory, ImageNet, FMoW, REOrder, machine learning, computer vision, deep learning">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>REOrdering Patches Improves Vision Models</title>
+  <link id="favicon" rel="icon" type="image/x-icon" href="static/images/bair-dark.ico">
+  <script>
+    const setFavicon = (mode) => {
+      const favicon = document.getElementById("favicon");
+      if (!favicon) return;
+      favicon.href = mode === "dark"
+        ? "static/images/bair-dark.ico"
+        : "static/images/bair-light.ico";
+    };
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    setFavicon(mediaQuery.matches ? "dark" : "light");
+    mediaQuery.addEventListener("change", (e) => setFavicon(e.matches ? "dark" : "light"));
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.3/dist/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/js/bulma-carousel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.3/dist/js/bulma-slider.min.js"></script>
+
+  <script src="static/js/index.js"></script>
+
+</head>
+
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">REOrdering Patches Improves Vision Models</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://d3tk.github.io" target="_blank">Declan Kutscher</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://dchan.cc" target="_blank">David M. Chan</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="https://yutongbai.com" target="_blank">Yutong Bai</a><sup>2</sup>,</span>
+              </span>
+              <span class="author-block">
+                <a href="https://people.eecs.berkeley.edu/~trevor/" target="_blank">Trevor
+                  Darrell</a><sup>2</sup>,</span>
+              </span>
+              <span class="author-block">
+                <a href="https://ritwikgupta.me" target="_blank">Ritwik Gupta</a><sup>2</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University of Pittsburgh, <sup>2</sup>Berkeley AI Research, UC
+                Berkeley<!--<br>Conferance name and year--></span>
+              <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Arxiv PDF link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2505.23751.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <!-- Github link -->
+                <span class="link-block">
+                  <a href="https://github.com/d3tk/REOrder" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2505.23751" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Teaser video-->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video poster="" id="tree" autoplay controls muted loop height="100%">
+          <!-- Your video here -->
+          <source src="static/videos/banner.mp4" type="video/mp4" playsinline>
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Images can be represented as sequences of patches, and the order of these patches can significantly affect the
+          performance of long sequence vision transformers.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <!-- End teaser video -->
+
+  <!-- Paper abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Transformers require inputs to be represented as one-dimensional sequences, and in vision, this typically
+              involves flattening images using a fixed row-major (raster-scan) order. While full self-attention is
+              permutation-equivariant, modern long-sequence transformers increasingly rely on architectural
+              approximations that break this invariance and introduce sensitivity to patch ordering. We show that patch
+              order significantly affects model performance in such settings, with simple alternatives like column-major
+              or Hilbert curves yielding notable accuracy shifts. Motivated by this, we propose REOrder, a
+              two-stage framework for discovering task-optimal patch orderings. First, we derive an
+              information-theoretic prior by evaluating the compressibility of various patch sequences. Then, we learn a
+              policy over permutations by optimizing a Plackett-Luce policy using REINFORCE. This approach enables
+              efficient learning in a combinatorial permutation space. REOrder improves top-1 accuracy over
+              row-major ordering on ImageNet-1K by up to 3.01% and Functional Map of the World by 13.35%.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End paper abstract -->
+
+  <!-- Paper motivation -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">TL;DR - So What?</h2>
+          <div class="content has-text-justified">
+            <ul>
+              <li>Long-sequence models are order-sensitive.</li>
+              <li>Alternative patch orderings can improve accuracy by 6% (or more)!</li>
+              <li>REOrder optimizes a patch ordering for a given model and dataset pair.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- End paper motivation -->
+
+  <!-- Teaser video-->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video poster="" id="tree" autoplay controls muted loop height="100%">
+          <!-- Your video here -->
+          <source src="static/videos/gumbel_to_examples.mp4" type="video/mp4" playsinline>
+        </video>
+        <h2 class="subtitle has-text-centered">
+          Utilizing a Plackett-Luce policy with reinforcement learning, we learn task-optimal patch sequences for
+          long-sequence vision transformers.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <!-- End teaser video -->
+
+
+
+  <!-- Paper motivation -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Can We Do Better Than Row Major?</h2>
+          <div class="content has-text-justified">
+            <p>
+              Our research shows patch ordering has a major impact on long-sequence models. Transformer-XL improved by
+              nearly 2 % with column-major scans but fell by over 6 % with spiral scans. Longformer gained up to 1.83 %
+              using column-major, Hilbert, or snake patterns. Orders that boost ImageNet-1K often underperform on FMoW.
+              REOrder consistently outperforms fixed schemes. Mamba achieves average gains of 2.20 % on ImageNet-1K and
+              9.32 % on FMoW, with some orders exceeding 13 %. Even Transformer-XL sees up to 1.50 % improvement with
+              learned sequences. Learning the optimal patch order for each model and dataset unlocks reliable accuracy
+              gains.
+
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End paper motivation -->
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <figure>
+          <img src="static/images/patch_order_effect.jpg" alt="Descriptive alt text">
+          <figcaption class="subtitle has-text-centered">
+            Due to the full self-attention approximations made in long sequence models, the order of image patches
+            greatly affects the task performance of the model.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Method -->
+  <section class="section hero is-light" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+      <div class="content has-text-justified">
+        <ol>
+          <li>
+            <strong>Prior:</strong>
+            Measure sequence compressibility under six scan patterns.
+          </li>
+          <li>
+            <strong>Policy:</strong>
+            Parameterize a Plackett-Luce model over patches and train with REINFORCE.
+          </li>
+          <li>
+            <strong>Curriculum:</strong>
+            <ul>
+              <li>
+                <strong>Warm-up:</strong>
+                Train for a few epochs with standard row-major ordering to stabilize the classifier.
+              </li>
+              <li>
+                <strong>Policy Learning:</strong>
+                Enable REOrder with high Gumbel noise. Sample patch sequences via the Plackett-Luce policy for several
+                iterations while jointly updating model weights and patch scores.
+              </li>
+              <li>
+                <strong>Freeze &amp; Fine-tune:</strong>
+                Sort patches by their learned scores, freeze the ordering policy, then fine-tune the model to
+                convergence.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Figure 1 -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <figure>
+          <img src="static/images/patch-order-effect-rl.jpg" alt="Descriptive alt text">
+          <figcaption class="subtitle has-text-centered">
+            REOrder learns optimal patch orderings for long-sequence vision models, improving accuracy accross different
+            image modalities.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+  <!-- End Figure -->
+
+
+
+
+  <!-- Paper results -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Results</h2>
+          <div class="content has-text-justified">
+            <p><strong>Model Sensitivity Ranking:</strong></p>
+            <ul>
+              <li><strong>Transformer-XL:</strong> Most sensitive (±6.4% accuracy swing)</li>
+              <li><strong>Mamba:</strong> Highly sensitive (±4% swing)</li>
+              <li><strong>Longformer:</strong> Moderately sensitive (±2% swing)</li>
+              <li><strong>ViT:</strong> Invariant (as expected)</li>
+            </ul>
+            <p><strong>Data Specific Insights:</strong></p>
+            <p>
+              Data structure drives sequence compressibility and model bias. Row-major and Hilbert scans preserve local
+              continuity and yield high LZMA compression, which can reinforce trivial correlations. Column-major and
+              spiral scans lower compressibility and push models to learn global features. Because compressibility alone
+              does not predict accuracy, REOrder learns the optimal ordering for each task.
+
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Paper results -->
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <figure>
+          <img src="static/images/lzma_vs_accuracy.jpg" alt="Descriptive alt text">
+          <figcaption class="subtitle has-text-centered">
+            The compressibility of the patch sequence is a good indicator of the model's performance. The more
+            compressible the sequence, the less information it contains.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+
+  <!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@misc{kutscher2025REOrder,
+        title={REOrdering Patches Improves Vision Models}, 
+        author={Declan Kutscher and David M. Chan and Yutong Bai and Trevor Darrell and Ritwik Gupta},
+        year={2025},
+        eprint={2505.23751},
+        archivePrefix={arXiv},
+        primaryClass={cs.LG},
+        url={https://arxiv.org/abs/2505.23751}, 
+  }</code></pre>
+    </div>
+  </section>
+  <!--End BibTex citation -->
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                target="_blank">Academic Project Page Template</a>. <br> This website is licensed under a <a
+                rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

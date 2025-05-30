@@ -1,0 +1,13 @@
+checkpoint_path: /path/to/checkpts/${run_name}/
+error_log_dir: /path/to/logs/${run_name}/
+
+datasets:
+  imagenet-1k:
+    training: /path/to/data/ImageNet/ILSVRC/Data/CLS-LOC/train
+    validation: /path/to/data/ImageNet/ILSVRC/Data/CLS-LOC/val_folders
+  mnist:
+    training: /path/to/data/MNIST/
+    validation: /path/to/data/MNIST/
+  cifar100:
+    training: /path/to/data/cifar-100/
+    validation: /path/to/data/cifar-100/

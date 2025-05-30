@@ -1,0 +1,21 @@
+# Python generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+wandb/
+.pytest_cache/
+
+# IDE and editor files
+.DS_Store
+.*/
+
+# Data
+.data/
+
+# Environment files
+.reorder/
+.python-version
+
